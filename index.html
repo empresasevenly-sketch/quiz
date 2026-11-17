@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teste de 60 segundos · Plantão IA</title>
+<meta name="description" content="Descubra em 60 segundos quantos clientes o WhatsApp do seu negócio pode estar deixando escapar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
+<script>
+/* ═════════════ CONFIGURAÇÃO (edite só aqui) ═════════════ */
+window.QUIZ_CONFIG = {
+  CHECKOUT_URL: 'https://pay.hotmart.com/S108529065G',   // link do checkout Hotmart do Plantão IA
+  PRECO: '27',                     // preço à vista (só números)
+  PARCELAS: '',                     // vazio = à vista (sem parcelamento)
+  PROMO_ATE: '',                   // data REAL de fim do preço de lançamento, ex.: '2026-12-15T23:59:00-03:00' ('' = não mostra)
+  PRECO_DEPOIS: '47',              // preço após a data acima
+  TERMOS_URL: '#termos',                 // link dos Termos de Uso
+  PRIVACIDADE_URL: '#privacidade',            // link da Política de Privacidade
+  FORNECEDOR: 'Filipe Alves de Oliveira · Suporte: empresa.sevenly@gmail.com · Pagamento processado pela Hotmart',
+  GADS_ID: '',                     // ex.: 'AW-123456789' (opcional: eventos de conversão)
+  GADS_LABEL_CHECKOUT: '',         // rótulo da conversão "clique no checkout" (opcional)
+};
+</script>
+<style>
+:root{--bg0:#070B1A;--bg1:#0E1430;--sf:#1A2350;--sf2:#232E66;--p:#7C5CFF;--p2:#A996FF;--c:#22D3EE;--a:#FFB547;--co:#FF6B8B;--ok:#34D399;--bad:#F87171;--t:#F5F7FF;--tm:#A8B0D6;--td:#6B74A8;--line:rgba(255,255,255,.09);--grad:linear-gradient(135deg,#7C5CFF 0%,#22D3EE 100%);--warm:linear-gradient(135deg,#FF6B8B 0%,#FFB547 100%)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg0);color:var(--t);font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+body{min-height:100vh;background:radial-gradient(90% 60% at 50% 0%,#151C48 0%,var(--bg0) 65%) fixed}
+.wrap{max-width:560px;margin:0 auto;padding:16px 18px 40px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0 14px}
+.brand{display:flex;align-items:center;gap:8px;font:800 18px 'Plus Jakarta Sans',Inter,sans-serif}
+.pill{font-size:12px;font-weight:700;color:#1B1203;background:var(--a);padding:6px 10px;border-radius:999px;white-space:nowrap}
+.bar{height:8px;border-radius:8px;background:rgba(255,255,255,.08);overflow:hidden;margin:4px 0 22px}
+.bar i{display:block;height:100%;width:0;background:var(--grad);transition:width .35s cubic-bezier(.16,1,.3,1)}
+h1,h2{font-family:'Plus Jakarta Sans',Inter,sans-serif;font-weight:800;letter-spacing:-.02em;line-height:1.08}
+h1{font-size:34px}h2{font-size:26px;margin-bottom:6px}
+.g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.w{background:var(--warm);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--tm);font-size:17px;line-height:1.45;margin:12px 0 20px}
+.step{animation:in .28s cubic-bezier(.16,1,.3,1)}
+@keyframes in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.q-n{color:var(--c);font-weight:700;font-size:13px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:8px}
+.opts{display:grid;gap:10px;margin-top:18px}
+.opt{display:flex;align-items:center;gap:14px;width:100%;text-align:left;padding:17px 16px;border-radius:16px;border:2px solid var(--line);background:linear-gradient(180deg,var(--sf2),var(--sf));color:var(--t);font:600 17px Inter,sans-serif;cursor:pointer;transition:border-color .15s,transform .1s}
+.opt:hover{border-color:var(--p)}.opt:active{transform:scale(.985)}
+.opt .e{font-size:24px;width:30px;text-align:center;flex-shrink:0}
+.opt.sel{border-color:var(--c);background:linear-gradient(180deg,#203a6a,#1a2a58)}
+.btn{display:block;width:100%;border:0;border-radius:999px;padding:19px 18px;background:var(--grad);color:#fff;font:800 19px 'Plus Jakarta Sans',Inter,sans-serif;text-align:center;text-decoration:none;cursor:pointer;box-shadow:0 14px 40px rgba(124,92,255,.45)}
+.btn.big{font-size:21px;padding:22px 18px}
+.btn:active{transform:scale(.985)}
+.micro{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;color:var(--tm);font-size:13px;margin-top:12px}
+.card{border-radius:20px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(35,46,102,.85),rgba(26,35,80,.85));padding:20px;margin:16px 0}
+.hl{border:2px solid var(--p);box-shadow:0 0 0 1px rgba(124,92,255,.3),0 18px 50px rgba(124,92,255,.25)}
+.loader{text-align:center;padding:40px 0}
+.spin{width:64px;height:64px;border-radius:50%;border:6px solid rgba(255,255,255,.1);border-top-color:var(--c);margin:0 auto 22px;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.chk{list-style:none;margin-top:16px;display:grid;gap:10px;text-align:left}
+.chk li{display:flex;gap:10px;align-items:flex-start;color:var(--tm);font-size:16px;opacity:.25;transition:opacity .3s}
+.chk li.on{opacity:1;color:var(--t)}
+.chk li b{color:var(--ok)}
+.meter{position:relative;height:14px;border-radius:14px;background:linear-gradient(90deg,var(--ok),var(--a),var(--bad));margin:18px 0 6px}
+.meter i{position:absolute;top:-6px;width:6px;height:26px;border-radius:4px;background:#fff;box-shadow:0 0 0 3px var(--bg0)}
+.lbls{display:flex;justify-content:space-between;color:var(--td);font-size:12px}
+.big-n{font:800 54px 'Plus Jakarta Sans',Inter,sans-serif;letter-spacing:-.03em;line-height:1}
+.tag{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border-radius:999px}
+.note{color:var(--td);font-size:12.5px;line-height:1.45;margin-top:10px}
+.list{list-style:none;display:grid;gap:12px;margin-top:6px}
+.list li{display:flex;gap:12px;align-items:flex-start;font-size:16.5px;line-height:1.4}
+.list li span:first-child{flex-shrink:0;font-size:20px}
+.chat{background:#0E1430;border-radius:18px;padding:14px;display:grid;gap:8px;margin-top:12px}
+.b{max-width:85%;padding:10px 13px;border-radius:16px;font-size:15px;line-height:1.35}
+.b.u{justify-self:end;background:var(--p);border-bottom-right-radius:5px}
+.b.a{justify-self:start;background:var(--sf2);border-bottom-left-radius:5px}
+.b small{display:block;font-size:10.5px;font-weight:700;color:var(--c);letter-spacing:.06em;margin-bottom:3px}
+.price{text-align:center;margin:8px 0 16px}
+.price .from{color:var(--td);font-size:15px;text-decoration:line-through}
+.price .now{font:800 58px 'Plus Jakarta Sans',Inter,sans-serif;letter-spacing:-.03em}
+.price .now small{font-size:24px;vertical-align:top;margin-right:4px}
+.price .inst{color:var(--tm);font-size:15px}
+.guar{display:flex;gap:14px;align-items:center}
+.seal{width:72px;height:72px;border-radius:50%;background:var(--warm);display:flex;align-items:center;justify-content:center;flex-direction:column;color:#1B1203;font-weight:800;flex-shrink:0;line-height:1}
+.seal b{font-size:26px}.seal span{font-size:10px}
+.timer{display:flex;justify-content:center;gap:8px;margin:10px 0 2px}
+.timer div{background:#0E1430;border:1px solid var(--line);border-radius:12px;padding:8px 10px;min-width:58px;text-align:center}
+.timer b{display:block;font:800 24px 'Plus Jakarta Sans',Inter,sans-serif}.timer span{font-size:11px;color:var(--tm)}
+details{border-top:1px solid var(--line);padding:14px 0}
+summary{cursor:pointer;font-weight:700;font-size:16px;list-style:none}
+summary::after{content:'+';float:right;color:var(--c)}
+details[open] summary::after{content:'–'}
+details p{color:var(--tm);margin-top:8px;line-height:1.45;font-size:15px}
+.foot{color:var(--td);font-size:12px;line-height:1.5;text-align:center;margin-top:30px}
+.foot a{color:var(--tm)}
+.sticky{position:fixed;left:0;right:0;bottom:0;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(7,11,26,.94);border-top:1px solid var(--line);display:none;z-index:9}
+.sticky .btn{max-width:560px;margin:0 auto;padding:15px;font-size:17px}
+.back{background:none;border:0;color:var(--td);font:600 14px Inter;margin-top:16px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand">
+      <svg width="30" height="30" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7C5CFF"/><stop offset="1" stop-color="#22D3EE"/></linearGradient></defs><rect x="2" y="4" width="40" height="32" rx="12" fill="url(#lg)"/><path d="M12 36 L10 46 L22 36 Z" fill="url(#lg)"/><path d="M22 11 L24.6 17.4 L31 20 L24.6 22.6 L22 29 L19.4 22.6 L13 20 L19.4 17.4 Z" fill="#fff"/><circle cx="40" cy="8" r="5" fill="#FFB547"/></svg>
+      Plantão IA
+    </div>
+    <span class="pill">Teste grátis · 60s</span>
+  </div>
+  <div class="bar" id="barWrap" style="visibility:hidden"><i id="bar"></i></div>
+  <main id="app"></main>
+  <p class="foot" id="foot"></p>
+</div>
+<div class="sticky" id="sticky"><a class="btn" id="stickyBtn" target="_top" href="#">QUERO O PLANTÃO IA →</a></div>
+
+<script>
+(() => {
+const CFG = window.QUIZ_CONFIG;
+const $ = (s) => document.querySelector(s);
+const app = $('#app');
+
+/* ─── Perguntas ─── */
+const Q = [
+  {k:'seg', t:'Qual é o seu tipo de negócio?', o:[
+    ['💇','Salão, barbearia ou estética','salao'],['🩺','Clínica, consultório ou terapia','clinica'],
+    ['🔧','Oficina ou prestador de serviço','servico'],['🛍️','Loja, delivery ou restaurante','loja'],['💼','Outro tipo de negócio','outro']]},
+  {k:'msgs', t:'Quantas mensagens você recebe por dia no WhatsApp do negócio?', o:[
+    ['🙂','Menos de 10','8'],['📱','De 10 a 30','20'],['🔥','De 30 a 80','50'],['🚨','Mais de 80','100']]},
+  {k:'tempo', t:'Em média, quanto tempo você leva para responder um cliente novo?', o:[
+    ['⚡','Menos de 5 minutos','0.05'],['⏱️','Até 30 minutos','0.15'],['⌛','De 1 a 3 horas','0.30'],['😬','Às vezes só no dia seguinte','0.45']]},
+  {k:'fora', t:'Chegam mensagens fora do seu horário (noite, domingo, feriado)?', o:[
+    ['🌙','Quase nunca','0'],['🌗','Algumas por semana','0.05'],['🌑','Muitas, todo dia','0.12']]},
+  {k:'ticket', t:'Quanto vale, em média, um cliente que fecha com você?', o:[
+    ['💵','Até R$ 50','35'],['💰','De R$ 50 a R$ 150','100'],['💎','De R$ 150 a R$ 500','300'],['🏆','Mais de R$ 500','700']]},
+  {k:'dor', t:'O que mais rouba o seu tempo no WhatsApp?', o:[
+    ['🔁','Responder sempre as mesmas perguntas','faq'],['📅','Agendar, remarcar e confirmar horários','agenda'],
+    ['👻','Correr atrás de cliente que some','follow'],['🤯','Tudo isso junto','tudo']]},
+  {k:'bot', t:'Você já tentou usar um robô de atendimento?', o:[
+    ['🆕','Nunca tentei','nunca'],['🤖','Sim, um robô de menu, e os clientes odiaram','menu'],['🧩','Sim, mas era complicado demais','dificil']]},
+  {k:'prog', t:'Você sabe programar?', o:[
+    ['🙅','Não, nada','nao'],['🤏','Um pouquinho','pouco'],['👨‍💻','Sim','sim']]},
+];
+const R = {}; let i = -1;
+
+const track = (ev, extra={}) => { try { if (window.gtag) gtag('event', ev, extra); } catch(e){} };
+const bar = (p) => { $('#barWrap').style.visibility = 'visible'; $('#bar').style.width = (p*100)+'%'; };
+const fmt = (n) => n.toLocaleString('pt-BR');
+
+/* ─── Telas ─── */
+function intro(){
+  app.innerHTML = `<section class="step">
+    <h1>Seu WhatsApp está <span class="w">deixando clientes escaparem</span>?</h1>
+    <p class="sub">Responda 8 perguntas rápidas e descubra, na hora, <b>quantos clientes por mês</b> o atendimento do seu negócio pode estar perdendo, e como resolver isso <b>sem programar</b>.</p>
+    <button class="btn big" id="go">COMEÇAR O TESTE GRÁTIS →</button>
+    <div class="micro"><span>⏱️ 60 segundos</span><span>🔒 Sem cadastro</span><span>📊 Resultado na hora</span></div>
+    <div class="card" style="margin-top:22px">
+      <div class="chat">
+        <div class="b u">Oi, tem horário amanhã? Quero fechar hoje</div>
+        <div class="b u">Alô??</div>
+        <div class="b u">Deixa, achei outro lugar.</div>
+      </div>
+      <p class="note" style="text-align:center;margin-top:12px">Isso acontece mais do que você imagina. Vamos medir no seu caso.</p>
+    </div></section>`;
+  $('#go').onclick = () => { track('quiz_inicio'); next(); };
+}
+function next(){ i++; i < Q.length ? pergunta() : analisando(); }
+function pergunta(){
+  const q = Q[i]; bar(i / Q.length);
+  app.innerHTML = `<section class="step">
+    <div class="q-n">Pergunta ${i+1} de ${Q.length}</div><h2>${q.t}</h2>
+    <div class="opts">${q.o.map((o,n)=>`<button class="opt" data-n="${n}"><span class="e">${o[0]}</span>${o[1]}</button>`).join('')}</div>
+    ${i>0?'<button class="back" id="back">← voltar</button>':''}</section>`;
+  app.querySelectorAll('.opt').forEach(b => b.onclick = () => {
+    b.classList.add('sel'); const o = q.o[+b.dataset.n]; R[q.k] = o[2]; R[q.k+'_txt'] = o[1];
+    setTimeout(next, 180);
+  });
+  const bk = $('#back'); if (bk) bk.onclick = () => { i -= 2; next(); };
+  window.scrollTo(0,0);
+}
+function analisando(){
+  bar(1); track('quiz_concluido', {segmento: R.seg});
+  const passos = ['Calculando seu volume de mensagens','Medindo o tempo de resposta','Estimando clientes perdidos por mês','Montando o seu plano de solução'];
+  app.innerHTML = `<section class="step loader"><div class="spin"></div><h2>Analisando suas respostas…</h2>
+    <ul class="chk">${passos.map(p=>`<li><b>✓</b>${p}</li>`).join('')}</ul></section>`;
+  const lis = app.querySelectorAll('.chk li');
+  lis.forEach((li,n) => setTimeout(() => li.classList.add('on'), 450*(n+1)));
+  setTimeout(resultado, 450*passos.length + 500);
+}
+
+/* ─── Resultado personalizado ─── */
+const SEG = {
+  salao:{nome:'salão',ex:[['u','Tem horário pra escova amanhã?'],['a','Tenho sim! 10h, 14h30 ou 17h. Qual prefere?'],['u','14h30'],['a','Agendado! Te lembro 2h antes 😉']]},
+  clinica:{nome:'clínica',ex:[['u','Vocês atendem sábado?'],['a','Atendemos sim, das 8h às 12h. Quer que eu veja um horário de consulta?'],['u','Quero, de manhã'],['a','Sábado às 9h está livre. Posso confirmar?']]},
+  servico:{nome:'negócio',ex:[['u','Quanto fica a revisão do meu carro?'],['a','A revisão sai a partir de R$ 489, com óleo e filtros. Quer agendar esta semana?'],['u','Quinta de manhã'],['a','Fechado! Quinta às 8h. Te espero!']]},
+  loja:{nome:'loja',ex:[['u','Vocês entregam no centro?'],['a','Entregamos sim! A taxa é R$ 6 e chega em até 40 min. Quer ver o cardápio?'],['u','Quero'],['a','Aqui está! Me diz o que vai querer 😊']]},
+  outro:{nome:'negócio',ex:[['u','Oi, quanto custa?'],['a','Oi! Te explico rapidinho: [serviço] sai a partir de R$ [valor]. Quer agendar uma conversa?'],['u','Quero'],['a','Perfeito! Tenho amanhã às 10h ou 15h.']]},
+};
+const DOR = {
+  faq:'A IA responde as perguntas repetidas sozinha, com as informações reais do seu negócio.',
+  agenda:'A IA agenda, confirma e lembra o cliente sozinha, sem você abrir a agenda.',
+  follow:'A automação chama de volta, com gentileza, quem parou de responder.',
+  tudo:'IA responde, agenda e chama de volta quem sumiu, tudo no automático.',
+};
+const BOT = {
+  nunca:'Você vai começar do jeito certo: com IA que conversa, não com robô de menu.',
+  menu:'Robô de menu irrita mesmo. Aqui é diferente: a IA entende o que o cliente escreve, do jeito dele.',
+  dificil:'O curso mostra tudo em aulas de 2 a 4 minutos, uma etapa de cada vez, arrastando blocos.',
+};
+function resultado(){
+  const msgs = +R.msgs, perda = Math.min(+R.tempo + +R.fora, 0.6), ticket = +R.ticket;
+  const conversasMes = Math.round(msgs * 22 * perda);          // conversas respondidas tarde/ou não respondidas
+  const clientes = Math.max(1, Math.round(conversasMes * 0.10)); // premissa: só 1 em cada 10 delas seria uma venda
+  const valor = clientes * ticket;
+  const nivel = clientes >= 20 ? ['CRÍTICO','var(--bad)',0.9] : clientes >= 6 ? ['ALERTA','var(--a)',0.6] : ['ATENÇÃO','var(--ok)',0.3];
+  const s = SEG[R.seg] || SEG.outro;
+  const precoAntigo = CFG.PROMO_ATE ? `<div class="from">Depois de ${new Date(CFG.PROMO_ATE).toLocaleDateString('pt-BR')}: R$ ${CFG.PRECO_DEPOIS}</div>` : '';
+  const url = checkoutUrl();
+  app.innerHTML = `<section class="step">
+    <span class="tag" style="background:${nivel[1]};color:#120d02">Nível ${nivel[0]}</span>
+    <h1 style="margin-top:12px">Seu ${s.nome} pode estar perdendo cerca de <span class="w">${fmt(clientes)} clientes por mês</span></h1>
+    <div class="card hl">
+      <div style="color:var(--tm);font-size:15px">Isso pode representar até</div>
+      <div class="big-n g">R$ ${fmt(valor)}<span style="font-size:22px;color:var(--tm)">/mês</span></div>
+      <div class="meter"><i style="left:calc(${nivel[2]*100}% - 3px)"></i></div><div class="lbls"><span>Atenção</span><span>Alerta</span><span>Crítico</span></div>
+      <p class="note">Estimativa simples feita com as <b>suas</b> respostas: cerca de ${msgs} mensagens/dia × 22 dias úteis × a parte que fica sem resposta rápida (${Math.round(perda*100)}%) × premissa conservadora de que só 1 em cada 10 dessas conversas viraria venda × ticket médio estimado de R$ ${fmt(ticket)}. Não é promessa de resultado.</p>
+    </div>
+
+    <h2 style="margin-top:26px">A boa notícia: dá pra resolver <span class="g">sem programar</span></h2>
+    <p class="sub" style="margin-top:6px">Com uma <b>assistente de IA de plantão no seu WhatsApp</b>, a conversa do seu ${s.nome} fica assim, a qualquer hora:</p>
+    <div class="chat">${s.ex.map(m=>`<div class="b ${m[0]}">${m[0]==='a'?'<small>ASSISTENTE VIRTUAL</small>':''}${m[1]}</div>`).join('')}</div>
+
+    <div class="card">
+      <ul class="list">
+        <li><span>🎯</span><span><b>O seu maior problema:</b> ${DOR[R.dor]}</span></li>
+        <li><span>💬</span><span>${BOT[R.bot]}</span></li>
+        <li><span>🧠</span><span>${R.prog==='sim'?'Você sabe programar, mas não vai precisar: tudo é visual e rápido.':'Você não precisa programar. Nem uma linha. Se você usa WhatsApp, você consegue.'}</span></li>
+      </ul>
+    </div>
+
+    <h2 style="margin-top:26px">Seu plano: <span class="g">Plantão IA</span></h2>
+    <p class="sub" style="margin-top:6px">O curso curto e 100% animado que te mostra, passo a passo, como colocar uma IA para atender, agendar e anotar cada cliente no WhatsApp do seu negócio.</p>
+    <div class="card hl">
+      <ul class="list">
+        <li><span>🎬</span><span><b>15 aulas animadas de 2 a 4 minutos</b>: do zero ao atendente no ar</span></li>
+        <li><span>✅</span><span><b>Checklist de Implementação</b> com fichas prontas para preencher</span></li>
+        <li><span>🧰</span><span><b>Guia de Ferramentas</b>: o que usar e como não gastar à toa</span></li>
+        <li><span>🛡️</span><span><b>Só caminhos oficiais</b>: sem ferramentas piratas que bloqueiam o número</span></li>
+        <li><span>⚡</span><span><b>Acesso imediato</b> pela Hotmart</span></li>
+      </ul>
+      <div class="price">
+        ${precoAntigo}
+        <div class="now"><small>R$</small>${CFG.PRECO}</div>
+        <div class="inst">${CFG.PARCELAS ? "ou " + CFG.PARCELAS + " · " : "à vista · "}pagamento único</div>
+      </div>
+      <div id="timer"></div>
+      <a class="btn big" id="cta" target="_top" href="${url}">QUERO O PLANTÃO IA →</a>
+      <div class="micro"><span>🔒 Pagamento seguro Hotmart</span><span>⚡ Acesso na hora</span></div>
+    </div>
+
+    <div class="card guar"><div class="seal"><b>7</b><span>DIAS</span></div>
+      <div><b>Garantia incondicional de 7 dias.</b><div style="color:var(--tm);font-size:15px;margin-top:4px;line-height:1.4">Assista, teste e, se não for para você, peça o reembolso pela Hotmart e receba 100% de volta. Sem perguntas.</div></div></div>
+
+    <div style="margin-top:18px">
+      <details><summary>Preciso saber programar?</summary><p>Não. Tudo é feito em ferramentas visuais, arrastando blocos. Cada aula mostra uma etapa só, em 2 a 4 minutos.</p></details>
+      <details><summary>Serve para o meu tipo de negócio?</summary><p>Se você recebe mensagens repetidas no WhatsApp, serve: salão, clínica, oficina, loja, delivery, escritório, prestador de serviço.</p></details>
+      <details><summary>Meu número pode ser bloqueado?</summary><p>O curso ensina apenas caminhos oficiais (API oficial do WhatsApp Business ou parceiros oficiais da Meta). Ferramentas piratas, que trazem esse risco, não são ensinadas.</p></details>
+      <details><summary>Vou ter outros custos?</summary><p>Talvez, conforme o seu volume: a API oficial e os modelos de IA são cobrados pelo uso, direto pelos fornecedores. Várias ferramentas têm planos gratuitos ou de entrada para começar.</p></details>
+      <details><summary>E se eu não gostar?</summary><p>Você tem 7 dias de garantia incondicional. Pede o reembolso pela Hotmart e recebe tudo de volta.</p></details>
+    </div>
+    <a class="btn big" style="margin-top:18px" target="_top" href="${url}">SIM, QUERO PARAR DE PERDER CLIENTES →</a>
+    <button class="back" id="refazer">↺ refazer o teste</button>
+  </section>`;
+  $('#refazer').onclick = () => { i = -1; for (const k in R) delete R[k]; $('#sticky').style.display='none'; $('#barWrap').style.visibility='hidden'; intro(); };
+  app.querySelectorAll('a.btn').forEach(a => a.addEventListener('click', () => track('checkout_click', CFG.GADS_ID && CFG.GADS_LABEL_CHECKOUT ? {send_to: CFG.GADS_ID+'/'+CFG.GADS_LABEL_CHECKOUT} : {})));
+  $('#stickyBtn').href = url;
+  const cta = $('#cta');
+  const io = 'IntersectionObserver' in window ? new IntersectionObserver(([e]) => { $('#sticky').style.display = e.isIntersecting || e.boundingClientRect.top > 0 ? 'none' : 'block'; }) : null;
+  if (io) io.observe(cta);
+  timer(); window.scrollTo(0,0);
+}
+function checkoutUrl(){
+  let u; try { u = new URL(CFG.CHECKOUT_URL); } catch(e) { return CFG.CHECKOUT_URL; }
+  try { new URLSearchParams(location.search).forEach((v,k) => { if (/^utm_|^gclid$|^src$/.test(k)) u.searchParams.set(k, v); }); } catch(e) {}
+  u.searchParams.set('sck', 'quiz_' + (R.seg || 'x'));   // rastreio da origem da venda na Hotmart
+  return u.toString();
+}
+function timer(){
+  if (!CFG.PROMO_ATE) return;
+  const fim = new Date(CFG.PROMO_ATE).getTime(); const el = $('#timer');
+  const tick = () => {
+    const d = fim - Date.now(); if (d <= 0) { el.innerHTML = ''; return; }
+    const p = [Math.floor(d/864e5), Math.floor(d/36e5)%24, Math.floor(d/6e4)%60, Math.floor(d/1e3)%60];
+    el.innerHTML = `<div style="text-align:center;color:var(--a);font-weight:700;font-size:14px">Preço de lançamento termina em:</div><div class="timer">${['dias','horas','min','seg'].map((l,n)=>`<div><b>${String(p[n]).padStart(2,'0')}</b><span>${l}</span></div>`).join('')}</div>`;
+    setTimeout(tick, 1000);
+  };
+  tick();
+}
+
+/* ─── rodapé + Google tag opcional ─── */
+$('#foot').innerHTML = `Plantão IA é um produto independente e não é afiliado, endossado ou patrocinado pela Meta ou pelo WhatsApp.
+  Os resultados dependem da aplicação de cada aluno; este curso não promete ganhos financeiros.<br>
+  ${CFG.FORNECEDOR}<br><a href="${CFG.TERMOS_URL}">Termos de Uso</a> · <a href="${CFG.PRIVACIDADE_URL}">Política de Privacidade</a>`;
+if (CFG.GADS_ID) {
+  const s = document.createElement('script'); s.async = true; s.src = 'https://www.googletagmanager.com/gtag/js?id=' + CFG.GADS_ID; document.head.appendChild(s);
+  window.dataLayer = window.dataLayer || []; window.gtag = function(){ dataLayer.push(arguments); }; gtag('js', new Date()); gtag('config', CFG.GADS_ID);
+}
+intro();
+})();
+</script>
+
+<style>.legal{position:fixed;inset:0;z-index:50;background:rgba(7,11,26,.92);display:none;overflow:auto;padding:24px 18px}.legal:target{display:block}
+.legal .box{max-width:720px;margin:0 auto;background:#0E1430;border:1px solid var(--line);border-radius:18px;padding:22px 20px;color:var(--tm);font-size:15px;line-height:1.6}
+.legal h1{font-size:24px;color:var(--t);margin-bottom:8px}.legal h2{font-size:18px;color:var(--t);margin:18px 0 6px}.legal p,.legal li{margin:6px 0}.legal ul{padding-left:20px}.legal strong{color:var(--t)}
+.legal .fechar{position:sticky;top:0;float:right;background:var(--sf2);color:var(--t);border-radius:999px;padding:8px 14px;font-weight:700;text-decoration:none}</style>
+<div class="legal" id="termos"><div class="box"><a class="fechar" href="#">✕ Fechar</a><h1>TERMOS DE USO: Plantão IA</h1>
+<p><em>Última atualização: 16/11/2026</em></p>
+<h2>1. Quem somos</h2>
+<p>Estes Termos regem o acesso ao curso online <strong>Plantão IA</strong> ("Curso"), oferecido por <strong>Filipe Alves de Oliveira</strong>, e-mail de contato <strong>empresa.sevenly@gmail.com</strong> ("Produtor").
+A venda, o pagamento, a emissão de comprovantes e a hospedagem da área de membros são realizados pela plataforma <strong>Hotmart</strong>, cujos Termos de Uso e Política de Privacidade também se aplicam à sua compra.</p>
+<h2>2. Aceite</h2>
+<p>Ao comprar ou acessar o Curso, você declara ter lido e aceitado estes Termos e a Política de Privacidade. Se não concordar, não conclua a compra. Para comprar, é preciso ter 18 anos ou mais, ou estar assistido/representado por responsável legal.</p>
+<h2>3. O que você recebe</h2>
+<p>3.1. Acesso a 15 videoaulas animadas, organizadas em 4 módulos, e aos materiais bônus descritos na página de vendas.<br>3.2. Prazo de acesso: <strong>vitalício, enquanto o Curso for oferecido</strong>, contado da confirmação do pagamento.<br>3.3. O Curso é <strong>educacional</strong>. Ele ensina a usar ferramentas de terceiros (por exemplo, Typebot, Make, n8n, modelos de IA e a API do WhatsApp Business) e <strong>não inclui</strong> licenças, assinaturas, créditos ou custos dessas ferramentas, que são contratadas e pagas diretamente pelo aluno aos respectivos fornecedores, quando necessárias.<br>3.4. Suporte: dúvidas sobre o conteúdo pelo canal <strong>e-mail empresa.sevenly@gmail.com</strong>, com resposta em até <strong>5 dias úteis</strong>. Não há suporte técnico para implementação individual, salvo se contratado à parte.</p>
+<h2>4. Independência e marcas de terceiros</h2>
+<p><strong>Este Curso é independente e não é afiliado, endossado, patrocinado ou de qualquer forma associado à Meta Platforms, Inc., ao WhatsApp ou aos demais fornecedores citados.</strong> As marcas mencionadas pertencem a seus titulares e são citadas apenas para fins descritivos e educacionais. Funcionalidades, preços e políticas dessas ferramentas podem mudar a qualquer tempo, por decisão exclusiva de seus fornecedores.</p>
+<h2>5. Sem promessa de resultados</h2>
+<p>5.1. Os resultados dependem da dedicação, do contexto de cada negócio e de fatores fora do controle do Produtor. <strong>O Curso não garante faturamento, ganhos financeiros, número de clientes ou qualquer resultado específico.</strong> Exemplos e casos apresentados são ilustrativos.<br>5.2. O aluno é o único responsável pela forma como configura e usa atendentes de IA em seu negócio ou no de terceiros, incluindo: cumprimento das políticas da Meta/WhatsApp, da LGPD e do Código de Defesa do Consumidor; revisão das respostas geradas por IA; transparência com seus clientes sobre o uso de assistente virtual; e obtenção de consentimento para envio de mensagens.<br>5.3. Para atividades regulamentadas (saúde, advocacia, finanças etc.), o aluno deve observar as normas do respectivo conselho ou órgão regulador.</p>
+<h2>6. Uso permitido e proibido</h2>
+<p>6.1. A licença de acesso é <strong>pessoal, intransferível e não exclusiva</strong>, para uso do próprio aluno.<br>6.2. É <strong>proibido</strong>: compartilhar login e senha; baixar, gravar, copiar, revender, distribuir, publicar ou disponibilizar as aulas e materiais, no todo ou em parte, gratuitamente ou não; remover marcas d'água ou avisos de direitos; usar o conteúdo para criar curso concorrente.<br>6.3. <strong>Uso permitido dos materiais bônus:</strong> o aluno pode adaptar os prompts, fluxos e modelos para uso em seu próprio negócio <strong>e em projetos que implementar para seus clientes</strong>, desde que não os revenda ou distribua como material avulso (por exemplo, como "pack de prompts").<br>6.4. O descumprimento pode resultar no bloqueio do acesso sem reembolso, sem prejuízo das medidas legais cabíveis (Lei 9.610/1998).</p>
+<h2>7. Propriedade intelectual</h2>
+<p>Todo o conteúdo do Curso (vídeos, roteiros, animações, mascote, marca, textos, prompts, modelos e materiais) é de titularidade do Produtor ou licenciado a ele, protegido pela Lei 9.610/1998 e pela Lei 9.279/1996. A compra não transfere nenhum direito de propriedade intelectual ao aluno, salvo a licença de uso do item 6.</p>
+<h2>8. Direito de arrependimento, garantia e reembolso</h2>
+<p>8.1. <strong>Direito de arrependimento (CDC, art. 49):</strong> você pode desistir da compra em até <strong>7 (sete) dias corridos</strong> contados da compra ou do primeiro acesso, o que ocorrer por último, sem precisar justificar, com devolução <strong>integral</strong> dos valores pagos, inclusive eventuais encargos.<br>8.2. <strong>Como pedir:</strong> pela própria Hotmart (área de compras do comprador ou central de ajuda) ou pelo e-mail <strong>empresa.sevenly@gmail.com</strong>. O reembolso segue os prazos e meios da Hotmart e da operadora do meio de pagamento (estorno em cartão pode aparecer em até duas faturas).<br>8.3. Após o reembolso, o acesso ao Curso e aos materiais é encerrado.<br>8.4. Fora do prazo do item 8.1, não há reembolso, salvo vício do serviço (CDC, art. 20) ou disposição legal em contrário.</p>
+<h2>9. Disponibilidade e alterações do Curso</h2>
+<p>9.1. O Produtor pode atualizar, corrigir ou reorganizar aulas para manter o conteúdo atual, sem reduzir de forma substancial o que foi ofertado.<br>9.2. Instabilidades da plataforma Hotmart, da internet ou de dispositivos do aluno não caracterizam descumprimento do Produtor, que atuará junto à plataforma para solucioná-las.<br>9.3. Se o Curso for descontinuado antes do fim do prazo de acesso contratado, o aluno será avisado com antecedência mínima de <strong>30 dias</strong> e poderá baixar os materiais em PDF.</p>
+<h2>10. Limitação de responsabilidade</h2>
+<p>O Produtor não se responsabiliza por: decisões das plataformas de terceiros (incluindo bloqueio ou banimento de números por violação das políticas da Meta); custos cobrados por ferramentas de terceiros; respostas geradas por modelos de IA configurados pelo aluno; ou danos decorrentes de uso do conteúdo em desacordo com as orientações do Curso e com a lei. Nada nestes Termos afasta direitos do consumidor previstos no CDC.</p>
+<h2>11. Privacidade</h2>
+<p>O tratamento de dados pessoais segue a <strong>Política de Privacidade</strong>, disponível no rodapé desta página, em conformidade com a Lei 13.709/2018 (LGPD).</p>
+<h2>12. Comunicações</h2>
+<p>Comunicações oficiais serão feitas pelo e-mail cadastrado na compra. Mensagens promocionais só serão enviadas com seu consentimento, que pode ser retirado a qualquer momento.</p>
+<h2>13. Alterações destes Termos</h2>
+<p>Estes Termos podem ser atualizados. A versão vigente estará sempre no rodapé desta página, com a data da última atualização. Mudanças relevantes serão comunicadas por e-mail. As condições da sua compra (preço, prazo de acesso, garantia) são as vigentes na data da compra.</p>
+<h2>14. Lei aplicável e foro</h2>
+<p>Aplica-se a legislação brasileira. Fica eleito o foro do <strong>domicílio do consumidor</strong> para resolver eventuais controvérsias. Antes, tente falar conosco em empresa.sevenly@gmail.com; você também pode usar a plataforma consumidor.gov.br.</p>
+<p><strong>Contato:</strong> Filipe Alves de Oliveira · empresa.sevenly@gmail.com</p></div></div>
+<div class="legal" id="privacidade"><div class="box"><a class="fechar" href="#">✕ Fechar</a><h1>POLÍTICA DE PRIVACIDADE: Plantão IA</h1>
+<p><em>Última atualização: 16/11/2026</em></p>
+<h2>1. Quem é o controlador</h2>
+<p><strong>Filipe Alves de Oliveira</strong> ("nós") é o <strong>controlador</strong> dos dados pessoais tratados para oferecer o curso <strong>Plantão IA</strong>.
+A <strong>Hotmart</strong> atua como controladora independente dos dados que ela coleta para processar pagamentos, prevenir fraudes, emitir documentos fiscais e hospedar a área de membros. Para esses tratamentos, vale a Política de Privacidade da Hotmart.</p>
+<p><strong>Canal de privacidade / Encarregado:</strong> Atendimento de Privacidade · empresa.sevenly@gmail.com</p>
+<h2>2. Quais dados tratamos, para quê e com qual base legal</h2>
+<p>| Dados | Origem | Finalidade | Base legal (LGPD, art. 7º) | Guarda |
+|---|---|---|---|---|
+| Nome, e-mail, telefone (se informado), produto comprado, data e status da compra | Hotmart, após a sua compra | Liberar e gerir o acesso, enviar comunicações sobre o curso, suporte, reembolsos | Execução de contrato (V) | Enquanto durar o acesso + 5 anos |
+| Dados de pagamento (cartão, Pix, boleto) | Hotmart | Processar pagamento | Tratados <strong>apenas pela Hotmart</strong>; <strong>não temos acesso</strong> aos dados completos do cartão | Conforme a Hotmart |
+| Registros fiscais da venda | Hotmart / nós | Obrigações fiscais e contábeis | Cumprimento de obrigação legal (II) | Prazo legal (em regra, 5 anos) |
+| Nome, e-mail e WhatsApp do formulário de conteúdo gratuito | Você, na landing page | Enviar a aula gratuita e, <strong>se você marcar a opção</strong>, conteúdos e ofertas | Consentimento (I) | Até você retirar o consentimento ou 24 meses sem interação |
+| Progresso nas aulas, comentários e mensagens de suporte | Área de membros / você | Suporte e melhoria do curso | Execução de contrato (V) / legítimo interesse (IX) | Enquanto durar o acesso |
+| Dados de navegação (cookies, pixel do Google Ads, métricas da página) | Página de vendas | Medir campanhas e melhorar a página | Consentimento (I), via aviso/gestor de cookies da página | Conforme a ferramenta |
+| Depoimentos (nome, foto, texto) | Você, se autorizar | Divulgação do curso | Consentimento (I), por termo específico | Até a revogação |</p>
+<p><strong>Não tratamos dados pessoais sensíveis</strong> (LGPD, art. 5º, II) para oferecer o curso. Não peça nem envie esse tipo de dado pelos canais de suporte.</p>
+<h2>3. Com quem compartilhamos</h2>
+<ul>
+<li><strong>Hotmart</strong>: venda, pagamento e área de membros.</li>
+<li><strong>Ferramentas operacionais</strong> de anúncios e medição (Google Ads), usadas somente para as finalidades acima e com contratos que exigem segurança dos dados.</li>
+<li><strong>Autoridades</strong>, quando houver obrigação legal ou ordem judicial.
+<strong>Não vendemos nem alugamos seus dados.</strong></li>
+</ul>
+<h2>4. Transferência internacional</h2>
+<p>Algumas ferramentas (por exemplo, serviços do Google e provedores de e-mail) podem armazenar dados fora do Brasil. Nesses casos, a transferência ocorre nas hipóteses do art. 33 da LGPD e da regulamentação da ANPD, como cláusulas contratuais padrão adotadas pelos fornecedores.</p>
+<h2>5. Seus direitos (LGPD, art. 18)</h2>
+<p>Você pode, a qualquer momento e de forma gratuita: confirmar se tratamos seus dados; acessá-los; corrigir dados incompletos ou desatualizados; pedir anonimização, bloqueio ou eliminação de dados desnecessários ou tratados em desconformidade; pedir a portabilidade; pedir a eliminação dos dados tratados com base no consentimento; saber com quem compartilhamos; ser informado sobre a possibilidade de não consentir e suas consequências; e <strong>retirar o consentimento</strong>.
+<strong>Como exercer:</strong> envie e-mail para <strong>empresa.sevenly@gmail.com</strong> com o assunto "Direitos LGPD". Podemos pedir confirmação de identidade. Respondemos em até <strong>15 dias</strong>. Você também pode peticionar à <strong>ANPD</strong> (gov.br/anpd).
+Para sair das listas de marketing: link "descadastrar" no e-mail ou responda <strong>SAIR</strong> no WhatsApp.</p>
+<h2>6. Segurança</h2>
+<p>Adotamos medidas técnicas e administrativas razoáveis: acesso restrito por senha e verificação em duas etapas nas contas das ferramentas; compartilhamento mínimo; exclusão periódica de dados desnecessários. Em caso de incidente de segurança que possa gerar risco ou dano relevante, comunicaremos os titulares afetados e a ANPD, conforme o art. 48 da LGPD e a regulamentação vigente.</p>
+<h2>7. Cookies</h2>
+<p>A página de vendas pode usar cookies e tags próprios e de terceiros (Hotmart, Google) para funcionamento, medição e publicidade. Você pode gerenciá-los no aviso de cookies da página, quando disponível, e nas configurações do seu navegador.</p>
+<h2>8. Menores de idade</h2>
+<p>O curso é destinado a maiores de 18 anos. Não coletamos intencionalmente dados de crianças e adolescentes.</p>
+<h2>9. Alterações</h2>
+<p>Esta Política pode ser atualizada. A versão vigente fica no rodapé desta página, com a data no topo. Mudanças relevantes serão comunicadas por e-mail.</p>
+<p><strong>Contato de privacidade:</strong> empresa.sevenly@gmail.com · Filipe Alves de Oliveira</p>
+<hr />
+<h3>Nota para o produtor (não publicar)</h3>
+<ul>
+<li>Esta Política cobre <strong>o curso</strong>. Quando você implementar atendentes de IA para <strong>clientes</strong>, cada negócio cliente precisa da <strong>sua própria</strong> política de privacidade, mencionando o atendimento automatizado por IA e os fornecedores usados (API do WhatsApp, Typebot, Make/n8n, provedor de IA). Nesses projetos, normalmente o seu cliente é o <strong>controlador</strong> e você atua como <strong>operador</strong>; formalize isso em contrato (cláusula de tratamento de dados).</li>
+<li>Se você não usar formulário próprio, pixel ou depoimentos, <strong>remova as linhas correspondentes</strong>: a política deve refletir exatamente o que você faz.</li>
+</ul></div></div>
+</body>
+</html>
